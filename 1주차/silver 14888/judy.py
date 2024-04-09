@@ -5,6 +5,8 @@ numbers = list(map(int, input().split()))
 operators_count = list(map(int, input().split()))
 
 operators = ["+"] * operators_count[0] + ["-"] * operators_count[1] + ["*"] * operators_count[2] + ["/"] * operators_count[3]
+
+# 계산식 순열
 operator_permutations = set(permutations(operators, len(operators)))
 
 max_result = float('-inf')

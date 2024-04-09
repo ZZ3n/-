@@ -18,7 +18,7 @@ def team_ability(team, S):
 
 # 최소 능력치 차이를 계산하는 함수
 def min_ability_difference(N, S):
-  players = range(N)
+  players = range(N) # 0 ~ N-1
   min_diff = float('inf')
 
   for team in combinations(players, N // 2):
@@ -28,7 +28,7 @@ def min_ability_difference(N, S):
     start_ability = team_ability(start_team, S)
     link_ability = team_ability(link_team, S)
 
-    diff = abs(start_ability - link_ability)
+    diff = abs(start_ability - link_ability) # 절댓값
 
     if diff < min_diff:
       min_diff = diff
