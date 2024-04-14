@@ -18,7 +18,7 @@ import java.util.*;
  * 3. 정답 : K년이 지난 후 살아있는 나무의 개수
  */
 
-public class Main {
+public class Jun2 {
     static class Tree implements Comparable {
         int row, col;
         int age;
