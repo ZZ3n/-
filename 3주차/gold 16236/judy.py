@@ -48,7 +48,7 @@ def bfs(N, grid, start_r, start_c):
 
 # 입력 받기
 N = int(input())
-grid = []
+bada = []
 shark_r, shark_c = 0, 0
 for i in range(N):
     row = list(map(int, input().split()))
@@ -56,7 +56,7 @@ for i in range(N):
         if row[j] == 9:
             shark_r, shark_c = i, j  # 아기 상어의 초기 위치
             row[j] = 0  # 아기 상어의 시작 위치를 빈 칸으로 변경
-    grid.append(row)
+    bada.append(row)
 
 # 결과 출력
-print(bfs(N, grid, shark_r, shark_c))
+print(bfs(N, bada, shark_r, shark_c))
