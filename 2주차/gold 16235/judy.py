@@ -15,6 +15,7 @@ for i in range(M):
 
 def spring_summer():
     number = 0
+    deaf = []
     for row in range(N):
         for col in range(N):
             B[row][col].sort()  # 나무를 나이에 따라 정렬
@@ -28,7 +29,9 @@ def spring_summer():
                 else:
                     dead += age // 2  # 죽은 나무는 양분이 됨
             B[row][col] = alive
-            H[row][col] += dead  # 죽은 나무가 양분으로 반환됨
+            deaf.append([row,col,dead])
+    for q in deaf:
+        H[q[0]][q[1]] += q[2]  # 죽은 나무가 양분으로 반환됨
     return number
 
 
