@@ -92,20 +92,20 @@ def shark_turn(M, alive_fishes, sy, sx, score):
     for i in range(1, N + 1):
         ny, nx = sy + direc_y * i, sx + direc_x * i
         if nx < 0 or nx >= N or ny < 0 or ny >= N:
-            print("Nah")
+            #print("Nah")
             break
         if M[ny][nx][0] == EMPTY_NUM:
-            print("EMPTY")
+            # print("EMPTY")
             continue
-        print(f"move to ({ny},{nx})")
+        # print(f"move to ({ny},{nx})")
         m = new_map(M)
         fish = alive_fishes.index(m[ny][nx][0])
-        alive_fishes = alive_fishes[:fish] + alive_fishes[fish + 1:]
+        new_fishes = alive_fishes[:fish] + alive_fishes[fish + 1:]
         new_score = score + m[ny][nx][0]
         m[ny][nx] = (SHARK_NUM, m[ny][nx][1])
         m[sy][sx] = (EMPTY_NUM, m[sy][sx][1])
-        results.append(BFS(m, alive_fishes, ny, nx, new_score))
-    print(results)
+        results.append(BFS(m, new_fishes, ny, nx, new_score))
+    # print(results)
     return max(results)
 
 
@@ -120,6 +120,10 @@ def new_map(M):
 def print_M(M, alive_fishes, msg):
     print(f"{msg} ####### MAP ###### : {alive_fishes}")
 
+    def print_directions(d):
+        ds = ['↑', '↖', '←', '↙', '↓', '↘', '→', '↗']
+        return ds[d]
+
     for lane in M:
         for elem in lane:
             direction = print_directions(elem[1])
@@ -132,15 +136,13 @@ def print_M(M, alive_fishes, msg):
         print('')
 
 
-def print_directions(direction):
-    directions = ['↑', '↖', '←', '↙', '↓', '↘', '→', '↗']
-    return directions[direction]
+
 
 
 def BFS(M, alive_fishes, sy, sx, score):
-    print_M(M, alive_fishes, "before fish_turn")
+    # print_M(M, alive_fishes, "before fish_turn")
     M = fish_turn(M, alive_fishes)
-    print_M(M, alive_fishes, "after fish_turn")
+    # print_M(M, alive_fishes, "after fish_turn")
     return shark_turn(M, alive_fishes, sy, sx, score)
 
 
@@ -149,4 +151,4 @@ init_alive_fishes = ALIVE_FISHES[:init_fish] + ALIVE_FISHES[init_fish + 1:]
 MAP[0][0] = (SHARK_NUM, MAP[0][0][1])
 
 answer = BFS(MAP, init_alive_fishes, 0, 0, init_fish)
-print(f"##### {answer} #####")
+print(answer+1)
