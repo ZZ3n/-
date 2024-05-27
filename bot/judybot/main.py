@@ -194,6 +194,67 @@ async def create_text_channel(interaction: discord.Interaction, channel_name: st
     new_channel = await category.create_text_channel(name=channel_name)
     await interaction.response.send_message(f"새 채팅 채널 '{new_channel.name}'이(가) 생성되었습니다!", ephemeral=False)
 
+@bot.tree.command(name='createchannel')
+@app_commands.describe(channel_name="채널 이름", channel_type="채널 유형 (text 또는 voice)")
+async def create_channel(interaction: discord.Interaction, channel_name: str, channel_type: str):
+    """새 텍스트 또는 음성 채널을 생성합니다."""
+    guild = interaction.guild
+    if channel_type not in ['text', 'voice']:
+        await interaction.response.send_message('잘못된 채널 유형입니다. "text" 또는 "voice"를 사용해주세요.', ephemeral=True)
+        return
+
+    try:
+        if channel_type == 'text':
+            new_channel = await guild.create_text_channel(name=channel_name)
+        elif channel_type == 'voice':
+            new_channel = await guild.create_voice_channel(name=channel_name)
+
+        invite = await new_channel.create_invite(max_age=600, max_uses=1)
+        await interaction.response.send_message(f"채널이 생성되었습니다: {new_channel.name}\n초대 링크: {invite.url}", ephemeral=False)
+    except Exception as e:
+        await interaction.response.send_message(f"채널 생성 중 오류가 발생했습니다: {e}", ephemeral=True)
+
+@bot.tree.command(name='ping')
+async def ping(interaction: discord.Interaction):
+    """Ping 명령어"""
+    await interaction.response.send_message('퐁!', ephemeral=False)
+
+@bot.tree.command(name='hello')
+async def hello(interaction: discord.Interaction):
+    """Hello 명령어"""
+    await interaction.response.send_message('안녕하세요! 🍊 나는 규리, 여러분의 귀여운 귤 친구예요! 언제나 여러분과 함께할 준비가 되어 있어요. 우리 같이 재미있는 모임을 만들고 즐거운 시간을 보내 볼까요? 어떤 모임이든, 제가 도와드릴게요!', ephemeral=False)
+
+@bot.tree.command(name='void')
+async def void(interaction: discord.Interaction):
+    """Void 명령어"""
+    image_path = 'void.png'  # 이미지 파일 경로
+    if not os.path.isfile(image_path):
+        await interaction.response.send_message("이미지 파일을 찾을 수 없습니다.", ephemeral=True)
+        return
+
+    try:
+        await interaction.response.send_message(file=discord.File(image_path))
+    except Exception as e:
+        print(f"이미지 전송 중 오류가 발생했습니다: {e}")
+        if not interaction.response.is_done():
+            await interaction.response.send_message(f"이미지 전송 중 오류가 발생했습니다: {e}", ephemeral=True)
+
+@bot.tree.command(name='void2')
+async def void2(interaction: discord.Interaction):
+    """Void2 명령어"""
+    image_path = 'void2.png'  # 이미지 파일 경로
+    if not os.path.isfile(image_path):
+        await interaction.response.send_message("이미지 파일을 찾을 수 없습니다.", ephemeral=True)
+        return
+
+    try:
+        await interaction.response.send_message(file=discord.File(image_path))
+    except Exception as e:
+        print(f"이미지 전송 중 오류가 발생했습니다: {e}")
+        if not interaction.response.is_done():
+            await interaction.response.send_message(f"이미지 전송 중 오류가 발생했습니다: {e}", ephemeral=True)
+
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
